@@ -17,8 +17,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import com.sun.glass.events.KeyEvent;
 
-
-
 public class OpenDiabetesSimulateMouse {
 
 	public Boolean startmagic(String FilepathforIEDriver, String sn, Boolean BG, Boolean Stick, String loginname,
@@ -33,14 +31,14 @@ public class OpenDiabetesSimulateMouse {
 			int ReplacmentForN;
 
 			WebDriver driver = null;
-			driver.quit();
+			// driver.quit();
 			Robot robot = new Robot();
 			DesiredCapabilities capabilities = null;
 
-			 capabilities = DesiredCapabilities.internetExplorer();
+			capabilities = DesiredCapabilities.internetExplorer();
 			capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
 			capabilities.setCapability("ignoreZoomSetting", true);
-			//capabilities.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
+			capabilities.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
 
 			try {
 				File file = new File(FilepathforIEDriver);
@@ -58,127 +56,126 @@ public class OpenDiabetesSimulateMouse {
 
 				return false;
 			}
-		 Boolean isPresent = driver.findElements(By.id("j_username")).size() > 0;
-		
-		if (isPresent) {
-			driver.findElement(By.id("j_username")).sendKeys(loginname);
-			driver.findElement(By.id("j_password")).sendKeys(loginPassword);
-			Thread.sleep(2000);
+			Boolean isPresent = driver.findElements(By.id("j_username")).size() > 0;
 
-			driver.findElement(By.id("j_password")).sendKeys(Keys.ENTER);
-		} else {
-			Thread.sleep(4000);
-			if (driver.findElements(By.id("j_username")).size() > 0) {
+			if (isPresent) {
 				driver.findElement(By.id("j_username")).sendKeys(loginname);
 				driver.findElement(By.id("j_password")).sendKeys(loginPassword);
 				Thread.sleep(2000);
-				// driver.findElement(By.id("loginButton")).click();
+
 				driver.findElement(By.id("j_password")).sendKeys(Keys.ENTER);
 			} else {
-				Thread.sleep(6000);
+				Thread.sleep(4000);
 				if (driver.findElements(By.id("j_username")).size() > 0) {
 					driver.findElement(By.id("j_username")).sendKeys(loginname);
 					driver.findElement(By.id("j_password")).sendKeys(loginPassword);
 					Thread.sleep(2000);
-
+					// driver.findElement(By.id("loginButton")).click();
 					driver.findElement(By.id("j_password")).sendKeys(Keys.ENTER);
 				} else {
-					JOptionPane.showMessageDialog(null, "Website has not fully loaded close and try running again");
-					return false;
+					Thread.sleep(6000);
+					if (driver.findElements(By.id("j_username")).size() > 0) {
+						driver.findElement(By.id("j_username")).sendKeys(loginname);
+						driver.findElement(By.id("j_password")).sendKeys(loginPassword);
+						Thread.sleep(2000);
+
+						driver.findElement(By.id("j_password")).sendKeys(Keys.ENTER);
+					} else {
+						JOptionPane.showMessageDialog(null, "Website has not fully loaded close and try running again");
+						return false;
+					}
 				}
 			}
-		}
-	
-	
 
-		Thread.sleep(4000);
+			Thread.sleep(4000);
 
-		Boolean isUploadPresent = driver.findElements(By.id("upload")).size() > 0;
-		if (isUploadPresent) {
-			driver.findElement(By.id("upload")).sendKeys(Keys.ENTER);
-		} else {
-			Thread.sleep(6000);
-			if (driver.findElements(By.id("upload")).size() > 0) {
+			Boolean isUploadPresent = driver.findElements(By.id("upload")).size() > 0;
+			if (isUploadPresent) {
 				driver.findElement(By.id("upload")).sendKeys(Keys.ENTER);
 			} else {
-				Thread.sleep(8000);
-
+				Thread.sleep(6000);
 				if (driver.findElements(By.id("upload")).size() > 0) {
 					driver.findElement(By.id("upload")).sendKeys(Keys.ENTER);
 				} else {
-					JOptionPane.showMessageDialog(null,
-							"upload section has not fully loaded close IE and try running Java program again");
-							return false;
+					Thread.sleep(8000);
+
+					if (driver.findElements(By.id("upload")).size() > 0) {
+						driver.findElement(By.id("upload")).sendKeys(Keys.ENTER);
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"upload section has not fully loaded close IE and try running Java program again");
+						return false;
+					}
 				}
 			}
-		}
-		Thread.sleep(10000);
-
-		
-		Boolean CompleAutoClick = false;
-		Thread.sleep(2000);
-		try {
-
-			Lang = driver.findElement(By.tagName("html")).getAttribute("lang");
-
-			LanguageClass Language = new LanguageClass();
-
-			ReplacmentForN = Language.getReplacment(Lang);
-			
-
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Site not fully loaded");
-			
-			return false;
-		}
-
-		if (driver.findElements(By.tagName("object")).size()>0/*driver.findElements(By.id("content")).size() > 0*/) {
-			CompleAutoClick=	Runningappletbuttons(sn, BG, Stick, robot,  ReplacmentForN);
-			//String wdt = driver.findElement(By.tagName("object")).getAttribute("width");
-			
-		} else {
 			Thread.sleep(10000);
-			if (driver.findElements(By.tagName("object")).size()>0) {
-				CompleAutoClick = 	Runningappletbuttons(sn, BG, Stick, robot,  ReplacmentForN);
+
+			Boolean CompleAutoClick = false;
+			Thread.sleep(2000);
+			try {
+
+				Lang = driver.findElement(By.tagName("html")).getAttribute("lang");
+
+				LanguageClass Language = new LanguageClass();
+
+				ReplacmentForN = Language.getReplacment(Lang);
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Site not fully loaded");
+
+				return false;
+			}
+
+			if (driver.findElements(By.tagName("object"))
+					.size() > 0/*
+								 * driver.findElements(By.id("content")).size() >
+								 * 0
+								 */) {
+				CompleAutoClick = Runningappletbuttons(sn, BG, Stick, robot, ReplacmentForN);
+				// String wdt =
+				// driver.findElement(By.tagName("object")).getAttribute("width");
 
 			} else {
-				Thread.sleep(12000);
-				if (driver.findElements(By.tagName("object")).size()>0) {
-					CompleAutoClick = Runningappletbuttons(sn, BG, Stick, robot,  ReplacmentForN);
+				Thread.sleep(10000);
+				if (driver.findElements(By.tagName("object")).size() > 0) {
+					CompleAutoClick = Runningappletbuttons(sn, BG, Stick, robot, ReplacmentForN);
 
 				} else {
-					JOptionPane.showMessageDialog(null,
-							"Applet section has not fully loaded close IE and try running again Java program again");
+					Thread.sleep(12000);
+					if (driver.findElements(By.tagName("object")).size() > 0) {
+						CompleAutoClick = Runningappletbuttons(sn, BG, Stick, robot, ReplacmentForN);
 
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Applet section has not fully loaded close IE and try running again Java program again");
+
+					}
 				}
+
 			}
+			// driver.quit();
+
+			return true;
+
+			// Runningappletbuttons(sn, BG, Stick, robot);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null,
+					"Please Check if the correct IEDriver is selected OR IE settings are not correctly");
+
+			return false;
+		} finally {
+			// JOptionPane.showMessageDialog(null, "Please Check if the correct
+			// IEDriver File Location is selected OR IE settings are correctly
+			// selected");
+			Thread.currentThread().interrupt();
 
 		}
-		//driver.quit();
-
-		return true;
-
-		// Runningappletbuttons(sn, BG, Stick, robot);
-}
-	catch(Exception e)
-	{
-		JOptionPane.showMessageDialog(null,
-				"Please Check if the correct IEDriver is selected OR IE settings are not correctly");
-		
-		return false;
-	}
-	finally {
-		// JOptionPane.showMessageDialog(null, "Please Check if the correct
-		// IEDriver File Location is selected OR IE settings are correctly
-		// selected");
-		Thread.currentThread().interrupt();
 
 	}
 
-	}
-	private Boolean Runningappletbuttons(String sn, Boolean BG, Boolean Stick, Robot robot,
-			int replacmentForN) throws InterruptedException, AWTException {
-		
+	private Boolean Runningappletbuttons(String sn, Boolean BG, Boolean Stick, Robot robot, int replacmentForN)
+			throws InterruptedException, AWTException {
+
 		// First selecting Minimed
 
 		Thread.sleep(500);
@@ -188,7 +185,7 @@ public class OpenDiabetesSimulateMouse {
 
 		robot.keyRelease(KeyEvent.VK_SHIFT);
 		robot.keyRelease(KeyEvent.VK_TAB);
-		//System.out.println("First shift tab");
+		// System.out.println("First shift tab");
 
 		Thread.sleep(2000);
 		robot.keyPress(KeyEvent.VK_DOWN);
@@ -323,8 +320,7 @@ public class OpenDiabetesSimulateMouse {
 			robot.keyRelease(KeyEvent.VK_DOWN);
 
 			Thread.sleep(2000);
-			
-			
+
 		}
 
 		Thread.sleep(2000);
@@ -347,22 +343,22 @@ public class OpenDiabetesSimulateMouse {
 		robot.keyRelease(KeyEvent.VK_ALT);
 		if (BG) {
 			robot.keyPress(KeyEvent.VK_ALT);
-		robot.keyPress(KeyEvent.VK_F);
-		robot.keyRelease(KeyEvent.VK_F);
-		robot.keyRelease(KeyEvent.VK_ALT);
-		robot.keyRelease(KeyEvent.VK_ALT);
-		robot.keyRelease(KeyEvent.VK_ALT);
-		robot.keyRelease(KeyEvent.VK_ALT);
-		robot.keyRelease(KeyEvent.VK_ALT);
-		robot.keyRelease(KeyEvent.VK_ALT);
-		robot.keyRelease(KeyEvent.VK_ALT);
-		robot.keyRelease(KeyEvent.VK_ALT);
-		robot.keyRelease(KeyEvent.VK_ALT);
-		robot.keyRelease(KeyEvent.VK_ALT);
-		robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyPress(KeyEvent.VK_F);
+			robot.keyRelease(KeyEvent.VK_F);
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyRelease(KeyEvent.VK_ALT);
+			robot.keyRelease(KeyEvent.VK_ALT);
 		}
 		return true;
-		
+
 	}
 
 	private static void leftClick() throws AWTException {

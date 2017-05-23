@@ -39,6 +39,7 @@ public class OpenDiabetesCrawlerCarelink {
 	private static void CSVORUpload() throws ParseException, IOException, AWTException, InterruptedException {
 		IsCsvOrUpload = DoYouWantToDownloadCSVOrUploadFiles();
 		Boolean IsStarMagicComplete = false;
+		OpenDiabetesSimulateMouse sm = new OpenDiabetesSimulateMouse();
 		if (IsCsvOrUpload) {
 			// Logic for CSV File
 			System.out.println("Note: Date should be in Format of DD/MM/YYYY  Example: 13/03/2017.");
@@ -55,7 +56,7 @@ public class OpenDiabetesCrawlerCarelink {
 		} else {
 			// Logic for Upload File
 			String IEDriver = GetIEDriver();
-			OpenDiabetesSimulateMouse sm = new OpenDiabetesSimulateMouse();
+		//	OpenDiabetesSimulateMouse sm = new OpenDiabetesSimulateMouse();
 			if(AskForAutoAckOrBGStick())
 			{
 				// AutoAck logic
